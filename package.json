@@ -1,0 +1,22 @@
+{
+  "name": "inventoryman",
+  "version": "1.0.0",
+  "description": "Inventory Management System",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lucyjung/inventoryman.git"
+  },
+  "keywords": [
+    "inventory"
+  ],
+  "author": "Narut",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lucyjung/inventoryman/issues"
+  },
+  "homepage": "https://github.com/Lucyjung/inventoryman#readme"
+}
