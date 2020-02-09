@@ -51,5 +51,8 @@
     "webpack": "",
     "webpack-cli": "",
     "webpack-dev-server": ""
+  },
+  "nodemonConfig": {
+    "ignore": ["views/*"]
   }
 }
