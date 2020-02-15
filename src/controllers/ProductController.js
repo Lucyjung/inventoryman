@@ -1,5 +1,5 @@
 const Product = require('../models/Product')
-
+const lazada = require('../services/lazada')
 module.exports = {
     
     create: async(req, res) => {
@@ -13,8 +13,16 @@ module.exports = {
         
     },
     read: async(req, res) => {
-        const prodList = await Product.listProduct()
-        res.json({success: true, result: prodList})
+        //const prodList = await Product.listProduct()
+        const instance = await lazada.init()
+        let request = lazada.initRequest("/products/get","GET")
+        request = lazada.addApiParam(request, "filter", "all")
+
+        lazada.execute(instance, request, "").then((response) => {
+            const data = response.data
+            res.json({success: true, result: data})
+        })
+        
     },
     update: async(req, res) => {
         res.json({success: true})
