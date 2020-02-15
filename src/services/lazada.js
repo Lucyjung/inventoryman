@@ -123,7 +123,7 @@ function execute(instance, request) {
       "value": timestamp
     })
 
-    if (config.accessToken) {
+    if (instance["TOKEN"]) {
       params.push({
         "key": "access_token",
         "value": instance["TOKEN"]
