@@ -9,6 +9,7 @@ routes.post('/product', ProductController.create);
 routes.patch('/product', ProductController.update);
 routes.get('/product', ProductController.read);
 routes.delete('/product', ProductController.delete);
-
+routes.post('/token', ProductController.generatetoken);
+routes.post('/refresh', ProductController.refreshToken);
 
 module.exports = routes;

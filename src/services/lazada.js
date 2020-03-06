@@ -3,11 +3,16 @@ const axios = require('axios');
 const crypto = require('crypto');
 const _ = require("lodash")
 const secret = require('../models/Config')
-async function init() {
+async function init(isAuth) {
 
   const userSecret = await secret.getConfig()
   const instance = {}
-  instance["URL"] = config.url
+  if (isAuth){
+    instance["URL"] = config.authUrl
+  } else {
+    instance["URL"] = config.url
+  }
+  
   instance["APP_ID"] = userSecret[0].appKey
   instance["SECRET_KEY"] = userSecret[0].appSecret
   instance["TOKEN"] = userSecret[0].accessToken
@@ -154,10 +159,39 @@ function execute(instance, request) {
     }
   });
 }
-
+async function createToken(code){
+  const instance = await init(true)
+  delete instance.TOKEN
+  
+  let request = initRequest("/auth/token/create","POST")
+  request = addApiParam(request, "code", req.body.code)
+  execute(instance, request, "").then(async (response) => {
+      const data = response.data
+      if (data.access_token && data.refresh_token) {
+          await secret.updateToken(data.access_token, data.refresh_token)
+      } 
+      return data;
+  })
+}
+async function refreshToken(){
+  const userSecret = await secret.getConfig()
+  const instance = await init(true)
+  delete instance.TOKEN
+  
+  let request = initRequest("/auth/token/refresh","POST")
+  request = addApiParam(request, "refresh_token", userSecret[0].refreshToken)
+  const response = await execute(instance, request, "")
+  const data = response.data
+  if (data.access_token && data.refresh_token) {
+      await secret.updateToken(data.access_token, data.refresh_token)
+  }
+  return data;
+}
 module.exports = {
   init,
   initRequest,
   addApiParam,
-  execute
+  execute,
+  createToken,
+  refreshToken
 }

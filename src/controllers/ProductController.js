@@ -31,4 +31,26 @@ module.exports = {
     delete: async(req, res) => {
         res.json({success: true})
     },
+    syncLazadaToDB: async (req, res) => {
+
+    },
+    generatetoken: async (req, res) => {
+        try {
+            const data = await lazada.createToken(req.body.code)
+            res.json({success: true, result: data})
+        }
+        catch (e){
+            console.log(e)
+            res.json({success: false, msg: e})
+        }
+    },
+    refreshToken: async (req, res) => {
+        try {
+            const data = await lazada.refreshToken();
+            res.json({success: true})
+        } catch (e){
+            console.log(e)
+            res.json({success: false, msg: e})
+        }
+    }
 }
