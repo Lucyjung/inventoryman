@@ -18,6 +18,21 @@ module.exports = {
   
     // Saves the entity
     await datastore.save(prod);
+    console.log(`Saved ${prod.key.id}`);
+  },
+  addProducts : async (products) => {
+  
+    // The Cloud Datastore key for the new entity
+    const idKey = datastore.key(kind);
+  
+    // Prepares the new entity
+    const prod = {
+      key: idKey,
+      data: products,
+    };
+    console.log(prod)
+    // Saves the entity
+    await datastore.save(prod);
     console.log(`Saved ${prod.key.name}`);
   },
   listProduct : async () =>{ 
